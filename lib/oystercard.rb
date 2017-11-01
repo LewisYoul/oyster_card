@@ -4,8 +4,10 @@ class Oystercard
 
   MAXIMUM_LIMIT = 90
   MINIMUM_AMOUNT = 1
+  INITIAL_BALANCE = 10
+  FARE_COST = 4
 
-  def initialize(amount = 10)
+  def initialize(amount = INITIAL_BALANCE)
     @balance = amount
     @entry_station
   end
@@ -48,7 +50,7 @@ class Oystercard
   end
 
   def deduct
-    @balance -= 4
+    @balance -= FARE_COST
   end
 
 end
