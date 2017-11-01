@@ -4,6 +4,7 @@ describe Oystercard do
   subject(:oystercard) { described_class.new }
   let(:oyster_1) { Oystercard.new(0) }
   let(:station) { double(:station) }
+  let(:station2) { double(:station2) }
 
   describe "#balance" do
     it "should be zero" do
@@ -35,9 +36,22 @@ describe Oystercard do
 
     it "should return false" do
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station2)
       expect(subject.in_journey?).to be(nil)
     end
+  end
+
+  describe "#travel_history" do
+    it "should respond to travel_history" do
+      expect(subject.travel_history).to be_an_instance_of(Hash)
+    end
+
+    it "should contain both entry and exit stations" do
+      subject.touch_in(station)
+      subject.touch_out(station2)
+      expect(subject.travel_history[1]).to eq([station, station2])
+    end
+
   end
 
   describe "#touch_in" do
@@ -53,17 +67,17 @@ describe Oystercard do
 
   describe "#touch_out" do
     it "should make journey equal false" do
-      subject.touch_out
+      subject.touch_out(station2)
       expect(subject.in_journey?).to be(nil)
     end
 
     it "should deduct £4 from balance" do
-      expect { subject.touch_out }.to change {subject.balance}.by(-4)
+      expect { subject.touch_out(station2) }.to change {subject.balance}.by(-4)
     end
 
     it "should set entry station to nil" do
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station2)
       expect(subject.entry_station).to eq(nil)
     end
 
