@@ -1,3 +1,7 @@
+# RUN THIS COMMAND TO AUTO-LOAD DEPENDENCIES IN IRB
+# irb -r ./lib/oystercard.rb -r ./lib/station.rb
+
+
 class Oystercard
 
   attr_reader :balance, :entry_station, :journey, :travel_history
